@@ -102,67 +102,76 @@
 
 </body>
 </html>
+
  <script type="text/javascript">
 
-	// In this code below we create the Front-end Javascript which "POSTS" our form data to our express server.
-	// In essence, when the user hits submit, jQuery grabs all of the fields then sends a post request to our api
-	// Our api recognizes the route (/api/tables)... and then runs the associated code (found in api-routes.js).
-	// In this case the associated code "saves" the data to the table-data.js file or waitinglist-data.js file
+// const friendArray = require("./friends.js");
 
-	$(".submit").on("click", function(){
+// let array1 = friendArray[0].scores;
+// let array2 = friendArray[1].scores;
 
-		// Here we grab the form elements
-		var newFriend = {
-			name: $('#name').val().trim(),
-			photo: $('#photo').val().trim(),
-			age: $('#age').val().trim(),
-			group1: $('#group1').val().trim(),
-			group2: $('#group2').val().trim(),
-			group3: $('#group3').val().trim(),
-			group4: $('#group4').val().trim(),
-			group5: $('#group5').val().trim(),
-			group6: $('#group6').val().trim(),
-			group7: $('#group7').val().trim(),
-			group8: $('#group8').val().trim(),
-			group9: $('#group9').val().trim(),
-			group10: $('#group10').val().trim(),
-		};
+// console.log(array1);
+// console.log(array2);
+// above here works====================================
 
-		console.log(newFriend);
+$(".submit").on("click", function(){
 
-		// This line is the magic. It's very similar to the standard ajax function we used.
-		// Essentially we give it a URL, we give it the object we want to send, then we have a "callback".
-		// The callback is the response of the server. In our case, we set up code in api-routes that "returns" true or false
-		// depending on if a tables is available or not.
+    // Here we grab the form elements
+    var newFriend = [{
+        name: $('#name').val().trim(),
+        photo: $('#photo').val().trim(),
+        age: $('#age').val().trim()
+    },
+    {
+        group1: $('#group1').val().trim(),
+        group2: $('#group2').val().trim(),
+        group3: $('#group3').val().trim(),
+        group4: $('#group4').val().trim(),
+        group5: $('#group5').val().trim(),
+        group6: $('#group6').val().trim(),
+        group7: $('#group7').val().trim(),
+        group8: $('#group8').val().trim(),
+        group9: $('#group9').val().trim(),
+        group10: $('#group10').val().trim(),
+    }];
+	
+    console.log(newFriend);
+    const newProfile = newFriend[1];
+	console.log(newProfile);
+	module.exports = newProfile;
 
-		// Here we get the location of the root page.
-		// We use this instead of explicitly saying the URL is localhost:3001 because the url will change when we deploy.
-		var currentURL = window.location.origin;
+// 		// This line is the magic. It's very similar to the standard ajax function we used.
+// 		// Essentially we give it a URL, we give it the object we want to send, then we have a "callback".
+// 		// The callback is the response of the server. In our case, we set up code in api-routes that "returns" true or false
+// 		// depending on if a tables is available or not.
 
-	    $.post(currentURL + `/api/friends`, newFriend,
-	    function(data){
-			if (data == true){
-	    		alert("You are officially added!")
-			}
+// 		// Here we get the location of the root page.
+// 		// We use this instead of explicitly saying the URL is localhost:3001 because the url will change when we deploy.
+    var currentURL = window.location.origin;
 
-	    	// Clear the form when submitting
-    		$('#name').val("");
-			$('#photo').val("");
-			$('#age').val("");
-			$('#group1').val("");
-			$('#group2').val("");
-			$('#group3').val("");
-			$('#group4').val("");
-			$('#group5').val("");
-			$('#group6').val("");
-			$('#group7').val("");
-			$('#group8').val("");
-			$('#group9').val("");
-			$('#group10').val("");
+    $.post(currentURL + `/api/friends`, newProfile,
+    function(data){
+        if (data == true){
+            alert("You are officially added!")
+        }
 
-		});
-		return false;
+        // Clear the form on submit
+        $('#name').val("");
+        $('#photo').val("");
+        $('#age').val("");
+        $('#group1').val("");
+        $('#group2').val("");
+        $('#group3').val("");
+        $('#group4').val("");
+        $('#group5').val("");
+        $('#group6').val("");
+        $('#group7').val("");
+        $('#group8').val("");
+        $('#group9').val("");
+        $('#group10').val("");
+
+    });
+    return false;
 });
-
-</script> 
+</script>  
 

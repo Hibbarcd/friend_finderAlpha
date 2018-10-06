@@ -1,3 +1,5 @@
+
+
 const friendArray = [
     {
         name:"Sarah",
