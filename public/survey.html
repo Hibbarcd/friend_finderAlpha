@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Survey</title>
+
+	<!-- Latest compiled and minified CSS & JS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+<body>
+
+	<div class="container">
+
+		<div class="jumbotron myJumbo">
+			<h1 class="text-center"><i class="fas fa-utensils"></i></span> Friend Finder Deluxe</h1>
+			<hr>
+			<h2 class="text-center">Add your Profile</h2>
+			<br>
+
+			<div class="text-center">
+				<a href="home.html"><button type="button" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-home"></span></button></a>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+
+				<!-- Add Profile Data -->
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">Make Your Profile</h4>
+					</div>
+					<div class="panel-body">
+
+						<form role="form">
+
+							<div class="form-group">
+								<label for="">Name</label>
+								<input type="text" class="form-control" id="name">
+							</div>
+							<div class="form-group">
+									<label for="">Photo</label>
+									<input type="text" class="form-control" id="photo">
+								</div>
+							<div class="form-group">
+								<label for="">Age</label>
+								<input type="text" class="form-control" id="age">
+							</div>
+							<div class="form-group">
+									<label for="">How much do you like being active?</label>
+									<input type="text" class="form-control" id="group1">
+								</div>
+								<div class="form-group">
+										<label for="">How much do you enjoy shopping and movies?</label>
+										<input type="text" class="form-control" id="group2">
+								</div>
+								<div class="form-group">
+										<label for="">How much do you enjoy drinking and clubbing?</label>
+										<input type="text" class="form-control" id="group3">
+								</div>
+								<div class="form-group">
+										<label for="">How much of an intellectual do you consider yourself?</label>
+										<input type="text" class="form-control" id="group4">
+								</div>
+								<div class="form-group">
+										<label for="">How much of a foodie do you consider yourself?</label>
+										<input type="text" class="form-control" id="group5">
+								</div>
+								<div class="form-group">
+										<label for="">How much do you like the outdoors?</label>
+										<input type="text" class="form-control" id="group6">
+								</div>
+								<div class="form-group">
+										<label for="">How willing are you to meet new people?</label>
+										<input type="text" class="form-control" id="group7">
+								</div>
+								<div class="form-group">
+										<label for="">Do you like adventure?</label>
+										<input type="text" class="form-control" id="group8">
+								</div>
+								<div class="form-group">
+										<label for="">How much of a daredevil are you?</label>
+										<input type="text" class="form-control" id="group9">
+								</div>
+								<div class="form-group">
+										<label for="">How political are you?</label>
+										<input type="text" class="form-control" id="group10">
+								</div>
+       
+									
+								</form>
+							<button type="submit" class="btn btn-primary submit">Submit</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
+ <script type="text/javascript">
+
+	// In this code below we create the Front-end Javascript which "POSTS" our form data to our express server.
+	// In essence, when the user hits submit, jQuery grabs all of the fields then sends a post request to our api
+	// Our api recognizes the route (/api/tables)... and then runs the associated code (found in api-routes.js).
+	// In this case the associated code "saves" the data to the table-data.js file or waitinglist-data.js file
+
+	$(".submit").on("click", function(){
+
+		// Here we grab the form elements
+		var newFriend = {
+			name: $('#name').val().trim(),
+			photo: $('#photo').val().trim(),
+			age: $('#age').val().trim(),
+			group1: $('#group1').val().trim(),
+			group2: $('#group2').val().trim(),
+			group3: $('#group3').val().trim(),
+			group4: $('#group4').val().trim(),
+			group5: $('#group5').val().trim(),
+			group6: $('#group6').val().trim(),
+			group7: $('#group7').val().trim(),
+			group8: $('#group8').val().trim(),
+			group9: $('#group9').val().trim(),
+			group10: $('#group10').val().trim(),
+		};
+
+		console.log(newFriend);
+
+		// This line is the magic. It's very similar to the standard ajax function we used.
+		// Essentially we give it a URL, we give it the object we want to send, then we have a "callback".
+		// The callback is the response of the server. In our case, we set up code in api-routes that "returns" true or false
+		// depending on if a tables is available or not.
+
+		// Here we get the location of the root page.
+		// We use this instead of explicitly saying the URL is localhost:3001 because the url will change when we deploy.
+		var currentURL = window.location.origin;
+
+	    $.post(currentURL + `/api/friends`, newFriend,
+	    function(data){
+			if (data == true){
+	    		alert("You are officially added!")
+			}
+
+	    	// Clear the form when submitting
+    		$('#name').val("");
+			$('#photo').val("");
+			$('#age').val("");
+			$('#group1').val("");
+			$('#group2').val("");
+			$('#group3').val("");
+			$('#group4').val("");
+			$('#group5').val("");
+			$('#group6').val("");
+			$('#group7').val("");
+			$('#group8').val("");
+			$('#group9').val("");
+			$('#group10').val("");
+
+		});
+		return false;
+});
+
+</script> 
+
